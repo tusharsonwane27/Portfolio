@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --gray-100: #f0f0f0;
+      --gray-300: #c4c4c4;
+      --gray-500: #7a7a7a;
+      --gray-700: #3a3a3a;
+      --accent: #0a0a0a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      background: rgba(250,250,250,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--gray-500);
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray-500);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .hero-inner { max-width: 860px; }
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.05;
+      font-weight: 400;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gray-500);
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--gray-700);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.8; }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 4rem;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray-300);
+      margin-bottom: 3rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      max-width: 900px;
+    }
+    .about-text { font-size: 1rem; color: var(--gray-700); font-weight: 300; line-height: 1.8; }
+    .about-details { display: flex; flex-direction: column; gap: 1.25rem; }
+    .detail-row { display: flex; flex-direction: column; gap: 0.2rem; }
+    .detail-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-300);
+    }
+    .detail-value { font-size: 14px; color: var(--gray-700); }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-100);
+      max-width: 900px;
+    }
+    .skill-card {
+      background: var(--white);
+      padding: 1.5rem;
+    }
+    .skill-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .skill-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    .skill-desc {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-100);
+    }
+    .project-card {
+      background: var(--white);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: background 0.2s;
+    }
+    .project-card:hover { background: var(--gray-100); }
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-300);
+    }
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+    .project-desc {
+      font-size: 13px;
+      color: var(--gray-500);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .project-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .project-link:hover { opacity: 0.6; }
+
+    /* CONTACT */
+    .contact-inner { max-width: 640px; }
+    .contact-inner p {
+      font-size: 1rem;
+      color: var(--gray-700);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+    .contact-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .contact-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gray-300);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .contact-link:hover { border-color: var(--black); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--gray-300);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero, section { padding: 6rem 1.5rem 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; }
+    }
+
+    body.dark {
+  --black: #fafafa;
+  --white: #0a0a0a;
+  --gray-100: #1a1a1a;
+  --gray-300: #3a3a3a;
+  --gray-500: #888888;
+  --gray-700: #c4c4c4;
+   
+}
+ body.dark nav {
+    background: rgba(10,10,10,0.92);
+    border-bottom: 1px solid #1a1a1a;
+}
+
+#theme-toggle {
+  background: none;
+  border: 1px solid var(--gray-300);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+#theme-toggle:hover { border-color: var(--gray-500); }
+
+
+  </style>
+</head>
+
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Tushar.dev</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <button id="theme-toggle" onclick="toggleTheme()">☀️</button>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-tag">// Portfolio</p>
+    <h1>Tushar Sonwane<br/><em>Data Developer</em></h1>
+    <p class="hero-desc">
+      QlikView developer building smart, AI-powered data solutions.
+      Turning raw data into meaningful insights — one dashboard at a time.
+    </p>
+    <a href="#projects" class="hero-cta">View my work →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">// 01 — About</p>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">A data person learning to build.</h2>
+      <p class="about-text">
+        I'm a QlikView report developer with a passion for turning data into clear,
+        actionable insights. Currently expanding into Python and AI to build smarter,
+        more impactful solutions. I believe great data work is equal parts logic and craft.
+      </p>
+    </div>
+    <div class="about-details">
+      <div class="detail-row">
+        <span class="detail-label">Location</span>
+        <span class="detail-value">Pune, Maharashtra, India</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Current Role</span>
+        <span class="detail-value">QlikView Report Developer</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Learning</span>
+        <span class="detail-value">Python · Flask · AI Integration</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Available For</span>
+        <span class="detail-value">Freelance · Collaboration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">// 02 — Skills</p>
+  <h2 class="section-title">What I work with.</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <p class="skill-name">QlikView / QlikSense</p>
+      <p class="skill-desc">Reports, dashboards, data modelling</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <p class="skill-name">Python</p>
+      <p class="skill-desc">Data processing, automation, Flask apps</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <p class="skill-name">AI Integration</p>
+      <p class="skill-desc">LLMs, REST APIs, intelligent features</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <p class="skill-name">SQL</p>
+      <p class="skill-desc">Querying, joins, data transformation</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <p class="skill-name">Flask</p>
+      <p class="skill-desc">Web apps, APIs, deployment on Render</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔧</div>
+      <p class="skill-name">Git & GitHub</p>
+      <p class="skill-desc">Version control, collaboration</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">// 03 — Projects</p>
+  <h2 class="section-title">Things I've built.</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <span class="project-tag">Python · Flask · AI</span>
+      <h3 class="project-title">Healthcare AI Assistant</h3>
+      <p class="project-desc">
+        An AI-powered web app for summarizing medical reports and checking symptoms
+        using Python, Flask, and LLM APIs.
+      </p>
+      <a href="#" class="project-link">View project →</a>
+    </div>
+    <div class="project-card">
+      <span class="project-tag">QlikView · SQL</span>
+      <h3 class="project-title">Sales Dashboard</h3>
+      <p class="project-desc">
+        An interactive QlikView dashboard for tracking regional sales KPIs,
+        trends, and forecasting with drill-down capability.
+      </p>
+      <a href="#" class="project-link">View project →</a>
+    </div>
+    <div class="project-card">
+      <span class="project-tag">Python · Data Analysis</span>
+      <h3 class="project-title">Portfolio Website</h3>
+      <p class="project-desc">
+        This very site — built with Python and Flask, deployed on Render.
+        A clean, minimal portfolio to showcase my work.
+      </p>
+      <a href="#" class="project-link">View source →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">// 04 — Contact</p>
+  <div class="contact-inner">
+    <h2 class="section-title">Let's connect.</h2>
+    <p>
+      Open to collaborations, freelance work, or just a conversation
+      about data and AI. Feel free to reach out.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:tusharsonwane2702@gmail.com" class="contact-link">tusharsonwane2702@gmail.com</a>
+      <a href="https://linkedin.com/in/tushaar-sonwane" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://github.com/tusharsonwane27" class="contact-link" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Tushar Sonwane</p>
+  <p>Built with Python · Flask · Deployed on Render</p>
+</footer>
+
+
+<script>
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark');
+    document.getElementById('theme-toggle').textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }
+
+  // Remember preference on page load
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.getElementById('theme-toggle').textContent = '🌙';
+  }
+</script>
+
+
+</body>
+</html>
